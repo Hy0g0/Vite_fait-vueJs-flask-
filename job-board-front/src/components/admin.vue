@@ -130,23 +130,18 @@ export default {
         async deleteAd(id) {
             console.log("deleteAd: " + id);
             const result = await axios.post("http://127.0.0.1:5000/API/GET/DELETEADVERT", `idAdv=${id}`)
-            console.log(result)
             if (result.data.result) alert("Ad deleted")
         },
         async deleteUser(id) {
             console.log("deleteUser: " + id);
             const result = await axios.post("http://127.0.0.1:5000/API/POST/DELETEUSER", `idUser=${id}`)
-            console.log(result)
             if (result.data.result) alert("user deleted")
         }, async deleteComp(id) {
             console.log("deleteComp: " + id);
             const result = await axios.post("http://127.0.0.1:5000/API/POST/DELETECOMPANY", `idcompany=${id}`)
-            console.log(result)
             if (result.data.result) alert("company deleted")
             //todo
         }, ModifUser(id, userName, userFirstName, mail, phone, isAdmin) {
-            console.log(id, userName, userFirstName, mail, phone, isAdmin)
-            console.log();
             this.ModifyUser = id;
             this.userName = userName
             this.userFirstName = userFirstName
@@ -158,7 +153,6 @@ export default {
         }, async SavemodifUser(id) {
             this.ModifyUser = -1
             const result = await axios.post("http://127.0.0.1:5000/API/POST/MODIFYUSER", `idUser=${id}&userName=${this.userName}&userFirstName=${this.userFirstName}&mail=${this.Usermail}&phone=${this.phone}`)
-            console.log(result)
             if (result.data.result === "success") alert("Modif success")
         },
         ModifAd(id, name, contractType, advertisementDescription, salary, category, location) {
@@ -173,7 +167,6 @@ export default {
         async SavemodifAd(id) {
             this.ModifyAdvert = -1
             const result = await axios.post("http://127.0.0.1:5000/API/POST/MODIFYADVERTISEMENT", `id=${id}&advertisementCategory=${this.adCategory}&advertisementDescription=${this.adDesc}&advertisementName=${this.adName}&salary=${this.adSalary}&contractType=${this.adContract}&advertisementlocation=${this.adLocation}`)
-            console.log(result)
             if (result.data.result === "success") alert("Modif success")
         }, ModifCompany(id,name,mail) {
             this.ModifyCompany = id
@@ -182,7 +175,6 @@ export default {
         },async SavemodifComp(id){
             this.ModifyCompany = -1
             const result = await axios.post("http://127.0.0.1:5000/API/POST/MODIFYCOMPANY", `idcompany=${id}&companyName=${this.compName}&mail=${this.compMail}`)
-            console.log(result)
             if (result.data.result === "success") alert("Modif success")
         }
 

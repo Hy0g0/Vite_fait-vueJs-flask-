@@ -34,7 +34,6 @@ export default {
     async mounted() {
         let myuser = Object.values(this.$store.state.myUserId)[0]
         const result = await axios.get(`http://127.0.0.1:5000/API/GET/GETINFOUSER?idUser=${myuser}`)
-        console.log(result.data.isAdmin)
         this.isAdmin = result.data.isAdmin
     },
 }

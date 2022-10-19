@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 
 #engine qui permet la connexion à notre base user:mdp @ host / base
 
-engine = create_engine("mysql+mysqldb://phpmyadmin:Hugomarine94!@localhost/JobBoard?charset=utf8mb4") 
+engine = create_engine("mysql+mysqldb://phpmyadmin:root@localhost/JobBoard?charset=utf8mb4") 
 
 
 

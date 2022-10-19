@@ -74,7 +74,6 @@ export default {
     setTimeout(() => {
       this.adverts = this.$store.state.advertsFromVueX;
     }, 40);
-    console.log("OK")
   },
 };
 </script>

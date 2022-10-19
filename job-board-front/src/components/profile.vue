@@ -148,7 +148,6 @@ export default {
       } else {
         this.varLearnMore = false;
       }
-      console.log(id);
       this.idinter = id;
     },
   },
@@ -162,7 +161,6 @@ export default {
         `http://127.0.0.1:5000/API/GET/INFOINTERACTION?userid=${myuser}`
       );
       this.interactions = res.data;
-      console.log(res.data);
       this.Name = result.data.userName;
       this.FirstName = result.data.userFirstName;
       this.phone = result.data.phone;
@@ -233,5 +231,9 @@ input::-webkit-inner-spin-button {
  #submit {
   width: 60%;
   margin-left: 50px;
+ }
+
+ .msg {
+  padding-right: 10px;
  }
 </style>

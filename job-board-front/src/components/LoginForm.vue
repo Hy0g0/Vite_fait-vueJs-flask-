@@ -39,7 +39,6 @@ export default {
                 )
                 if (result.data.mail) {
                     if (result.data.password) {
-                        console.log(result.data.id)
                         this.$store.dispatch("setUserId", { myUSerId: parseInt(result.data.id) });
                         this.$router.push("/search-adverts")
                     } else this.msg = "mauvais mot de passe"
