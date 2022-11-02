@@ -40,6 +40,9 @@ export default {
                 if (result.data.mail) {
                     if (result.data.password) {
                         this.$store.dispatch("setUserId", { myUSerId: parseInt(result.data.id) });
+                        axios.defaults.headers.common['Authorization'] = "Bearer "+result.data.token;
+                        this.$cookies.set("myUSerId",result.data.id);
+                        this.$cookies.set("token",result.data.token);
                         this.$router.push("/search-adverts")
                     } else this.msg = "mauvais mot de passe"
                 } else {

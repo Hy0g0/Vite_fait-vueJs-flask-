@@ -1,19 +1,20 @@
-from flask import Flask, request
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from alchemy.tables.main import SessionLocal
 from alchemy.tables.TablesDeclare import Advertisement, Company, Users, Interactions
 import hashlib
-import flask_jwt_extended
+import  flask_jwt_extended
 
 session = SessionLocal
 
 app = Flask("myapp")
 CORS(app)
 app.config['SECRET_KEY'] = 'cc53f4fda6d74e53b39f35ffb4895a69'
-
+jwt = flask_jwt_extended.JWTManager(app)
 
 # route principale de l'api permet de vérifier que le serveur est en ligne affiche simplement Hello World!
 @app.route("/")
+@flask_jwt_extended.jwt_required()
 def hello():
     return "Hello, World!"
 
@@ -48,12 +49,14 @@ def login():
             if (res.mdp == hashlib.md5(password.encode()).hexdigest()):
                 msgpswd = True
                 id = res.iduser
+    access_token = flask_jwt_extended.create_access_token(identity=mail)
 
     return {
         "success": "success  ",
         "mail": msgmail,
         "password": msgpswd,
-        "id": id
+        "id": id,
+        "token": access_token
     }
 # Route qui permet d'ajouter un utilisateur à la base à partir des données du formulaire d'inscription
 
@@ -91,7 +94,9 @@ def register():
 
 
 @app.route('/API/POST/CREATED', methods=['POST'])
+@flask_jwt_extended.jwt_required()
 def create_advert():
+    
     sessionl = session()
     insert = Advertisement()
     id = request.form["idUser"]
@@ -118,6 +123,7 @@ def create_advert():
 
 
 @app.route('/API/GET/DELETEADVERT', methods=['GET'])
+@flask_jwt_extended.jwt_required()
 def delete_advert():
     sessionl = session()
     idAdv = None
@@ -134,6 +140,7 @@ def delete_advert():
 
 
 @app.route('/API/POST/DELETEUSER', methods=['POST'])
+@flask_jwt_extended.jwt_required()
 def delete_user():
     sessionl = session()
     idUser = request.form["idUser"]
@@ -146,6 +153,7 @@ def delete_user():
 
 
 @app.route('/API/GET/GETINFOUSER', methods=['GET'])
+@flask_jwt_extended.jwt_required()
 def get_info_user():
     sessionl = session()
     idtmp = request.args.get("idUser")
@@ -156,6 +164,7 @@ def get_info_user():
 
 
 @app.route('/API/GET/GETUSERS', methods=['GET'])
+@flask_jwt_extended.jwt_required()
 def get_users():
     sessionl = session()
     users = sessionl.query(Users)
@@ -168,6 +177,7 @@ def get_users():
 
 
 @app.route('/API/POST/MODIFYUSER', methods=['POST'])
+@flask_jwt_extended.jwt_required()
 def update_user():
     sessionl = session()
     idtmp = request.form["idUser"]
@@ -184,6 +194,7 @@ def update_user():
 
 
 @app.route('/API/POST/MODIFYADVERTISEMENT', methods=['POST'])
+@flask_jwt_extended.jwt_required()
 def update_advertisement():
     sessionl = session()
     idAdv = request.form["id"]
@@ -202,6 +213,7 @@ def update_advertisement():
 
 
 @app.route('/API/POST/CREATEDINTERACTION', methods=['POST'])
+@flask_jwt_extended.jwt_required()
 def create_interaction():
     sessionl = session()
     insert = Interactions()
@@ -235,6 +247,7 @@ def create_interaction():
 
 
 @app.route("/API/GET/INFOCOMPANYS", methods=["GET"])
+@flask_jwt_extended.jwt_required()
 def get_company():
     sessionl = session()
     list = sessionl.query(Company).all()
@@ -248,6 +261,7 @@ def get_company():
 
 
 @app.route("/API/POST/CREATECOMPANY", methods=["POST"])
+@flask_jwt_extended.jwt_required()
 def create_company():
     sessionl = session()
     insert = Company()
@@ -277,6 +291,7 @@ def create_company():
 
 
 @app.route('/API/POST/DELETECOMPANY', methods=['POST'])
+@flask_jwt_extended.jwt_required()
 def delete_company():
     sessionl = session()
     idCompany = request.form['idcompany']
@@ -289,6 +304,7 @@ def delete_company():
 
 
 @app.route("/API/POST/MODIFYCOMPANY", methods=["POST"])
+@flask_jwt_extended.jwt_required()
 def modify_company():
     sessionl = session()
     idCompany = request.form['idcompany']
@@ -302,6 +318,7 @@ def modify_company():
 
 # Get Info Interaction
 @app.route('/API/GET/INFOINTERACTION', methods=['GET'])
+@flask_jwt_extended.jwt_required()
 def get_info_interaction():
     sessionl = session()
     idUser = request.args.get('userid')
